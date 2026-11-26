@@ -21,12 +21,12 @@ from app.database import Base
 
 class TimestampMixin:
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime(), nullable=False
+        DateTime, server_default=func.current_timestamp(), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime,
-        server_default=func.sysutcdatetime(),
-        onupdate=func.sysutcdatetime(),
+        server_default=func.current_timestamp(),
+        onupdate=func.current_timestamp(),
         nullable=False,
     )
 
@@ -75,6 +75,7 @@ class Consultation(TimestampMixin, Base):
             "patient_id",
             unique=True,
             mssql_where=text("status = 'active'"),
+            postgresql_where=text("status = 'active'"),
         ),
     )
 
@@ -86,7 +87,7 @@ class Consultation(TimestampMixin, Base):
     clinician_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     status: Mapped[str] = mapped_column(String(20), default="active")
     started_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
     ended_at: Mapped[datetime | None] = mapped_column(DateTime)
     requires_review: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -119,7 +120,7 @@ class Message(Base):
     sequence_number: Mapped[int] = mapped_column(Integer)
     flagged: Mapped[bool] = mapped_column(Boolean, default=False)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
 
     consultation: Mapped[Consultation] = relationship(back_populates="messages")
@@ -138,7 +139,7 @@ class VoiceRecording(Base):
     content_type: Mapped[str] = mapped_column(String(100))
     byte_size: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime(), nullable=False
+        DateTime, server_default=func.current_timestamp(), nullable=False
     )
 
 
@@ -161,7 +162,7 @@ class Assessment(Base):
     total_score: Mapped[int | None] = mapped_column(Integer)
     severity: Mapped[str | None] = mapped_column(String(30))
     started_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
     completed_at: Mapped[datetime | None] = mapped_column(DateTime)
 
@@ -186,7 +187,7 @@ class AssessmentAnswer(Base):
     score: Mapped[int] = mapped_column(Integer)
     answer_text: Mapped[str] = mapped_column(String(100))
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
 
     assessment: Mapped[Assessment] = relationship(back_populates="answers")
@@ -208,7 +209,7 @@ class ConsultationSummary(Base):
     reviewed_by_user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
 
 
@@ -226,7 +227,7 @@ class SafetyEvent(Base):
     status: Mapped[str] = mapped_column(String(20), default="open")
     acknowledged_by_user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime)
 
@@ -242,5 +243,5 @@ class AuditLog(Base):
     entity_id: Mapped[str] = mapped_column(String(100))
     details: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.sysutcdatetime()
+        DateTime, server_default=func.current_timestamp()
     )

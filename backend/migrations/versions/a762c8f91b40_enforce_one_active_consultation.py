@@ -19,7 +19,7 @@ depends_on: str | Sequence[str] | None = None
 def upgrade() -> None:
     op.execute(
         """
-        ;WITH ranked_active AS (
+        WITH ranked_active AS (
             SELECT
                 id,
                 ROW_NUMBER() OVER (
@@ -31,7 +31,7 @@ def upgrade() -> None:
         )
         UPDATE consultations
         SET status = 'cancelled',
-            ended_at = COALESCE(ended_at, SYSUTCDATETIME())
+            ended_at = COALESCE(ended_at, CURRENT_TIMESTAMP)
         WHERE id IN (
             SELECT id FROM ranked_active WHERE active_rank > 1
         )
@@ -43,6 +43,7 @@ def upgrade() -> None:
         ["patient_id"],
         unique=True,
         mssql_where=sa.text("status = 'active'"),
+        postgresql_where=sa.text("status = 'active'"),
     )
 
 

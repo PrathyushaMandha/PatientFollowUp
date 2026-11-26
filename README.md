@@ -48,6 +48,10 @@ Driver: ODBC Driver 18 for SQL Server
 
 To use another server, database, or authentication method, update `DATABASE_URL` in `backend/.env`.
 
+For a PostgreSQL production database, set `DATABASE_URL` to the provider's
+`postgresql://...` connection string. The application automatically selects the
+installed Psycopg driver.
+
 ## 3. Install the backend
 
 From the repository root, create a virtual environment and install the Python dependencies:

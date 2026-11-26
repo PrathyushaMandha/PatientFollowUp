@@ -26,7 +26,7 @@ def upgrade() -> None:
         sa.Column("storage_key", sa.String(length=255), nullable=False),
         sa.Column("content_type", sa.String(length=100), nullable=False),
         sa.Column("byte_size", sa.Integer(), nullable=False),
-        sa.Column("created_at", sa.DateTime(), server_default=sa.text("sysutcdatetime()"), nullable=False),
+        sa.Column("created_at", sa.DateTime(), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False),
         sa.ForeignKeyConstraint(["consultation_id"], ["consultations.id"]),
         sa.ForeignKeyConstraint(["recorded_by_user_id"], ["users.id"]),
         sa.PrimaryKeyConstraint("id"),
