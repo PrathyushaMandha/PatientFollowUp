@@ -52,6 +52,18 @@ For a PostgreSQL production database, set `DATABASE_URL` to the provider's
 `postgresql://...` connection string. The application automatically selects the
 installed Psycopg driver.
 
+To replace an empty PostgreSQL deployment with existing local SQL Server data,
+set `TARGET_DATABASE_URL` in `backend/.env`, then run:
+
+```powershell
+Set-Location backend
+..\.venv\Scripts\python.exe -m scripts.migrate_sqlserver_to_postgresql
+```
+
+The command displays source and target row counts and requires `MIGRATE`
+confirmation. It preserves password hashes but excludes voice-recording metadata
+because local audio files are not deployed with the application.
+
 ## 3. Install the backend
 
 From the repository root, create a virtual environment and install the Python dependencies:
