@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     frontend_origin: str = "http://localhost:5173"
     bootstrap_username: str = "clinician"
     bootstrap_password: str = "ChangeMe123!"
+    voice_recording_dir: str = "voice_recordings"
+    voice_recording_max_bytes: int = 25 * 1024 * 1024
 
     model_config = SettingsConfigDict(
         env_file=(".env", "backend/.env"),

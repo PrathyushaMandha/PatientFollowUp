@@ -5,7 +5,18 @@ from pypdf import PdfReader
 
 from app.models import Assessment, Consultation, Message, Patient
 from app.services.agent import ConversationFindings, SymptomFinding
-from app.services.report import build_consultation_report
+from app.services.report import build_consultation_report, build_report_filename
+
+
+def test_report_filename_uses_patient_name_and_consultation_date() -> None:
+    patient = Patient(first_name="Ram", last_name="M / Test", created_by_user_id=1)
+    consultation = Consultation(
+        patient_id=1,
+        clinician_user_id=1,
+        started_at=datetime(2026, 10, 15, 9, 30),
+    )
+
+    assert build_report_filename(patient, consultation) == "Ram_M_Test_2026-10-15.pdf"
 
 
 def test_builds_valid_report_when_assessment_exists() -> None:

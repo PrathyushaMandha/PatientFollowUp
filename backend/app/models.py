@@ -125,6 +125,23 @@ class Message(Base):
     consultation: Mapped[Consultation] = relationship(back_populates="messages")
 
 
+class VoiceRecording(Base):
+    __tablename__ = "voice_recordings"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    public_id: Mapped[str] = mapped_column(
+        String(36), unique=True, index=True, default=lambda: str(uuid.uuid4())
+    )
+    consultation_id: Mapped[int] = mapped_column(ForeignKey("consultations.id"), index=True)
+    recorded_by_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    storage_key: Mapped[str] = mapped_column(String(255), unique=True)
+    content_type: Mapped[str] = mapped_column(String(100))
+    byte_size: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, server_default=func.sysutcdatetime(), nullable=False
+    )
+
+
 class Assessment(Base):
     __tablename__ = "assessments"
     __table_args__ = (

@@ -2,6 +2,7 @@
 
 :root { font-family: "DM Sans", sans-serif; color: #18211f; background: #f3f5f2; font-synthesis: none; --ink: #18211f; --muted: #68736f; --line: #d9dfdb; --paper: #ffffff; --forest: #173f3a; --teal: #168074; --mint: #dff1eb; --amber: #d58a24; --rose: #bd4d58; }
 * { box-sizing: border-box; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
 body { margin: 0; min-width: 320px; min-height: 100vh; }
 button, input, textarea, select { font: inherit; letter-spacing: 0; }
 button { cursor: pointer; }
@@ -47,6 +48,8 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 
 .app-shell { min-height: 100vh; display: grid; grid-template-columns: 76px 280px minmax(0, 1fr); }
 .app-shell.wide-mode { grid-template-columns: 76px minmax(0, 1fr); }
+.app-shell.patient-mode { grid-template-columns: 104px minmax(0, 1fr); }
+.patient-mode .app-nav { padding-inline: 12px; }
 .app-nav { position: sticky; top: 0; height: 100vh; z-index: 5; display: flex; flex-direction: column; align-items: center; padding: 18px 10px; color: #c9d6d2; background: #102d29; }
 .nav-brand strong { display: none; }
 .app-nav nav { display: grid; gap: 8px; width: 100%; margin-top: 54px; }
@@ -60,6 +63,10 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .patient-sidebar header { display: flex; justify-content: space-between; align-items: center; padding: 0 8px 20px; }
 .patient-sidebar h2 { margin: 4px 0 0; font-size: 1.9rem; }
 .add-button { background: var(--forest); color: white; }
+.patient-search { position: relative; display: block; margin: 0 8px 16px; }
+.patient-search > svg { position: absolute; z-index: 1; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.patient-search input { height: 40px; padding: 9px 10px 9px 36px; font-size: .78rem; }
+.patient-search-empty { padding: 20px 10px; color: var(--muted); text-align: center; font-size: .78rem; }
 .patient-list { display: grid; gap: 4px; }
 .patient-list > button { min-width: 0; display: grid; grid-template-columns: 38px minmax(0,1fr) 18px; align-items: center; gap: 10px; padding: 12px 10px; text-align: left; border: 0; border-radius: 5px; background: transparent; color: var(--ink); }
 .patient-list > button.selected, .patient-list > button:hover { background: white; box-shadow: 0 1px 3px rgba(20,45,39,.08); }
@@ -78,6 +85,38 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .welcome-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 240px)); gap: 1px; background: var(--line); border: 1px solid var(--line); width: fit-content; }
 .welcome-grid span { display: flex; align-items: center; gap: 10px; padding: 18px; background: #f7f8f6; font-size: .82rem; font-weight: 600; }
 .welcome-grid svg { width: 18px; color: var(--teal); }
+.home-page { min-height: 100vh; padding: clamp(36px, 6vw, 82px); background-image: linear-gradient(rgba(247,248,246,.94), rgba(247,248,246,.94)), linear-gradient(#cbd5d0 1px, transparent 1px), linear-gradient(90deg, #cbd5d0 1px, transparent 1px); background-size: auto, 32px 32px, 32px 32px; }
+.home-page > header { max-width: 620px; margin-bottom: 34px; }
+.home-page h1 { margin: 7px 0 10px; font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1; }
+.home-page header p { max-width: 540px; color: var(--muted); font-size: .92rem; line-height: 1.55; }
+.patient-home { display: grid; align-content: center; }
+.patient-home > header { margin-bottom: 34px; }
+.patient-home h1 { font-size: 3rem; }
+.patient-home header p { font-size: .84rem; }
+.patient-home .home-action strong { font-size: 1.05rem; }
+.patient-home .home-action small { font-size: .74rem; }
+.patient-home-error { width: min(980px, 100%); margin-bottom: 14px; }
+.patient-home-actions { width: min(980px, 100%); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.patient-home-actions .home-action { width: 100%; min-height: 112px; grid-template-columns: 46px minmax(0, 1fr) 18px; padding: 16px; }
+.patient-home-actions .home-action-icon { width: 46px; height: 46px; }
+.patient-reports-page { min-height: 100vh; padding: clamp(32px, 5vw, 72px); }
+.patient-reports-page > header { display: flex; align-items: center; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.patient-reports-page h1 { margin: 4px 0 0; font-size: 2.6rem; }
+.patient-reports-page > .form-error { margin-top: 18px; }
+.patient-report-list { max-width: 920px; display: grid; gap: 8px; margin-top: 22px; }
+.patient-report-list article { min-height: 82px; display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 18px; border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 6px; background: white; }
+.patient-report-list .report-number { color: var(--teal); font: 600 1.25rem "Newsreader"; }
+.patient-report-list strong, .patient-report-list small { display: block; }
+.patient-report-list strong { font: 600 1.05rem "Newsreader"; }
+.patient-report-list small { margin-top: 4px; color: var(--muted); font-size: .72rem; }
+.home-action { width: min(480px, 100%); min-height: 96px; display: grid; grid-template-columns: 50px minmax(0, 1fr) 22px; align-items: center; gap: 15px; padding: 18px; text-align: left; color: var(--ink); background: white; border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 6px; box-shadow: 0 8px 28px rgba(20,45,39,.08); }
+.home-action:hover { border-color: #9dc9bd; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(20,45,39,.12); }
+.home-action-icon { width: 50px; height: 50px; display: grid; place-items: center; color: var(--forest); background: var(--mint); border-radius: 6px; }
+.home-action-icon svg { width: 23px; }
+.home-action strong, .home-action small { display: block; }
+.home-action strong { margin-bottom: 4px; font: 600 1.15rem "Newsreader"; }
+.home-action small { color: var(--muted); }
+.home-action > svg { color: var(--teal); }
 .patient-detail { min-height: 100vh; padding: 30px clamp(20px, 4vw, 58px); }
 .patient-heading { min-height: 92px; display: flex; align-items: center; gap: 16px; }
 .patient-avatar { width: 54px; height: 54px; font-size: 1rem; }
@@ -86,11 +125,39 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .start-button { margin-left: auto; }
 .mobile-back { display: none; }
 .page-error { margin: 10px 0; }
+.patient-overview { background: #f7f8f6; }
+.patient-profile { max-width: 820px; display: grid; grid-template-columns: 1fr 1fr; margin-top: 30px; border: 1px solid var(--line); background: white; }
+.profile-field { min-height: 104px; display: grid; align-content: center; gap: 7px; padding: 22px 26px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.profile-field:nth-child(2n) { border-right: 0; }
+.profile-field span { color: var(--muted); font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+.profile-field strong { font: 600 1.2rem "Newsreader"; }
+.profile-actions { grid-column: span 2; display: flex; gap: 10px; padding: 22px 26px; }
+.subpage-heading { display: flex; align-items: flex-start; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.subpage-heading h1 { margin: 5px 0; font-size: 2.5rem; }
+.subpage-heading p { margin: 0; color: var(--muted); font-size: .84rem; }
+.summary-list { max-width: 940px; display: grid; gap: 12px; margin-top: 22px; }
+.summary-card { overflow: hidden; border: 1px solid var(--line); border-radius: 6px; background: white; }
+.summary-card > header { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.summary-card h2 { display: inline; margin: 0 0 0 9px; font-size: 1.15rem; }
+.summary-card > p { min-height: 76px; margin: 0; padding: 18px 20px; color: #46514d; font-size: .86rem; line-height: 1.6; white-space: pre-wrap; }
+.summary-card > footer { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-top: 1px solid #edf0ee; background: #fafbf9; }
+.summary-card > footer > span { color: var(--muted); font-size: .72rem; }
+.clinician-consultations { min-height: calc(100vh - 190px); }
+.consultation-summary-panel { min-height: 480px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.consultation-summary-body { display: grid; align-content: start; gap: 0; padding: 6px 24px; }
+.consultation-summary-body > section { padding: 26px 0; border-bottom: 1px solid var(--line); }
+.consultation-summary-body h3 { margin: 6px 0 10px; font: 600 1.35rem "Newsreader"; }
+.consultation-summary-body p { max-width: 760px; margin: 0; color: #4f5b57; font-size: .86rem; line-height: 1.65; white-space: pre-wrap; }
+.report-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.report-row > div { min-width: 0; }
+.report-row button { flex: 0 0 auto; }
+.consultation-summary-actions { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 24px; border-top: 1px solid var(--line); background: #fafbf9; }
+.consultation-summary-actions > span { color: var(--muted); font-size: .74rem; }
 .segmented { display: flex; gap: 4px; padding: 6px 0 18px; border-bottom: 1px solid var(--line); }
 .segmented button { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 0; color: var(--muted); background: transparent; font-size: .82rem; font-weight: 600; }
 .segmented button.active { color: var(--forest); box-shadow: inset 0 -2px var(--teal); }
-.consultation-layout { min-height: calc(100vh - 180px); display: grid; grid-template-columns: 210px minmax(0, 1fr); }
-.visit-list { padding: 18px 14px 0 0; border-right: 1px solid var(--line); }
+.consultation-layout { height: calc(100vh - 180px); min-height: 0; display: grid; grid-template-columns: 210px minmax(0, 1fr); }
+.visit-list { min-height: 0; overflow-y: auto; padding: 18px 14px 0 0; border-right: 1px solid var(--line); }
 .visit-list button { width: 100%; display: grid; grid-template-columns: 30px 1fr 15px; align-items: center; gap: 8px; padding: 11px 9px; border: 0; border-radius: 5px; text-align: left; color: var(--ink); background: transparent; }
 .visit-list button.selected { background: var(--mint); }
 .visit-list strong, .visit-list small { display: block; }
@@ -99,8 +166,80 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .visit-index { color: var(--teal); font-family: "Newsreader", serif; font-size: 1.1rem; }
 .visit-list svg { width: 15px; color: var(--muted); }
 .empty-copy { color: var(--muted); font-size: .8rem; padding: 8px; }
-.workspace-container { min-width: 0; padding: 18px 0 0 24px; }
+.workspace-container { min-width: 0; min-height: 0; display: grid; overflow: hidden; padding: 18px 0 0 24px; }
 .consultation-workspace { height: calc(100vh - 205px); min-height: 520px; display: grid; grid-template-rows: auto minmax(0,1fr) auto auto auto; background: white; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.communication-choice { min-height: 520px; display: grid; align-content: center; padding: clamp(28px, 5vw, 64px); border: 1px solid var(--line); border-radius: 7px; background: white; }
+.communication-choice > header { max-width: 620px; }
+.communication-choice > header > div { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .72rem; }
+.communication-choice h2 { margin: 14px 0 8px; font-size: 2.25rem; }
+.communication-choice header p { margin: 0; color: var(--muted); font-size: .86rem; }
+.communication-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+.communication-options > button { min-width: 0; min-height: 128px; display: grid; grid-template-columns: 54px minmax(0, 1fr) 20px; align-items: center; gap: 15px; padding: 20px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 7px; background: #fafbf9; }
+.communication-options > button:not(:disabled):hover { border-color: #9dc9bd; background: #f2f8f5; transform: translateY(-2px); }
+.communication-option-icon { width: 54px; height: 54px; display: grid; place-items: center; color: var(--forest); border-radius: 6px; background: var(--mint); }
+.communication-option-icon.voice { color: #80531a; background: #f7ead7; }
+.communication-option-icon.summary { color: #345c78; background: #e4eef4; }
+.communication-option-icon.report { color: #7d4f18; background: #f7ead7; }
+.communication-options strong, .communication-options small { display: block; }
+.communication-options strong { margin-bottom: 6px; font: 600 1.2rem "Newsreader"; }
+.communication-options small { color: var(--muted); font-size: .74rem; line-height: 1.4; }
+.communication-options > button > svg { color: var(--teal); }
+.communication-choice > footer { display: flex; align-items: center; gap: 8px; margin-top: 22px; color: var(--muted); font-size: .72rem; }
+.communication-choice-error { margin-top: 14px; }
+.consultation-start-state { min-height: 520px; display: grid; place-content: center; justify-items: center; padding: 32px; text-align: center; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.consultation-start-state .communication-option-icon { margin-bottom: 18px; }
+.consultation-start-state h2 { margin: 9px 0 8px; font-size: 2rem; }
+.consultation-start-state p { max-width: 480px; margin: 0 0 22px; color: var(--muted); font-size: .85rem; line-height: 1.55; }
+.consultation-start-state > small { max-width: 440px; margin-top: 14px; color: var(--muted); font-size: .72rem; }
+.consultation-entry { min-height: calc(100vh - 180px); display: grid; align-content: center; padding: clamp(30px, 7vw, 90px); }
+.consultation-entry > header { max-width: 620px; }
+.consultation-entry h2 { margin: 10px 0 0; font-size: 2.4rem; }
+.consultation-entry-options { width: min(880px, 100%); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 28px; }
+.consultation-entry-options > button { min-width: 0; min-height: 150px; display: grid; grid-template-columns: 56px minmax(0, 1fr) 20px; align-items: center; gap: 16px; padding: 22px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 7px; background: white; box-shadow: 0 8px 24px rgba(20,45,39,.06); }
+.consultation-entry-options > button:not(:disabled):hover { border-color: #9dc9bd; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(20,45,39,.1); }
+.consultation-entry-options strong, .consultation-entry-options small { display: block; }
+.consultation-entry-options strong { margin-bottom: 6px; font: 600 1.25rem "Newsreader"; }
+.consultation-entry-options small { color: var(--muted); font-size: .75rem; line-height: 1.45; }
+.consultation-entry-options > button > svg { color: var(--teal); }
+.consultation-entry > p { display: flex; align-items: center; gap: 9px; margin: 18px 0 0; color: var(--muted); font-size: .75rem; }
+.patient-channel-view { height: 100%; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 10px; }
+.channel-back { width: fit-content; }
+.patient-channel-view .consultation-workspace, .patient-speech-workspace { height: 100%; min-height: 0; }
+.patient-consultation-summary { min-height: 470px; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.patient-consultation-summary > header { padding: 22px 24px; border-bottom: 1px solid var(--line); }
+.patient-consultation-summary > header > div { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .72rem; }
+.patient-consultation-summary h2 { margin: 12px 0 0; font-size: 1.7rem; }
+.patient-consultation-summary > .form-error { margin: 20px; }
+.patient-summary-content { max-width: 780px; padding: 34px 24px; }
+.patient-summary-content p { margin: 9px 0 0; color: #46514d; font-size: .9rem; line-height: 1.75; white-space: pre-wrap; }
+.speech-workspace { min-width: 0; display: grid; grid-template-rows: auto minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.speech-workspace > header { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 15px 18px; border-bottom: 1px solid var(--line); }
+.speech-workspace > header h2 { margin: 3px 0 0; font-size: 1.25rem; }
+.speech-workspace > header > svg { color: var(--teal); }
+.speech-ready, .speech-unavailable { display: grid; place-content: center; justify-items: center; padding: 28px; text-align: center; background-image: radial-gradient(#d7e1dd 1px, transparent 1px); background-size: 22px 22px; }
+.speech-ready > div, .speech-unavailable > svg { width: 76px; height: 76px; display: grid; place-items: center; margin-bottom: 18px; color: var(--teal); border: 1px solid #b9d9d0; border-radius: 50%; background: #eef8f4; }
+.speech-ready > div svg { width: 34px; height: 34px; }
+.speech-unavailable > svg { padding: 20px; color: var(--muted); }
+.speech-ready h3, .speech-unavailable h3 { margin: 0 0 8px; font: 600 1.25rem "Newsreader"; }
+.speech-ready p, .speech-unavailable p { max-width: 290px; margin: 0 0 22px; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.voice-history-ready { min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.voice-history-messages { min-height: 0; }
+.voice-history-ready > footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-top: 1px solid var(--line); background: white; }
+.voice-history-ready > footer p { margin: 0; color: var(--muted); font-size: .74rem; }
+.voice-history-ready > footer button { flex: 0 0 auto; }
+.voice-inline { min-height: 0; overflow: hidden; }
+.voice-inline .voice-session { width: 100%; height: 100%; max-height: none; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border: 0; border-radius: 0; box-shadow: none; }
+.voice-inline .voice-stage { min-height: 0; padding: 24px 18px; }
+.voice-recordings-view { min-height: 470px; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: white; }
+.voice-recordings-view > header { padding: 22px 24px; border-bottom: 1px solid var(--line); }
+.voice-recordings-view h2 { margin: 5px 0 0; font-size: 1.7rem; }
+.voice-recordings-view > .form-error { margin: 18px; }
+.voice-recording-list { display: grid; gap: 8px; padding: 18px; }
+.voice-recording-list article { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 15px; border: 1px solid var(--line); border-radius: 6px; background: #fafbf9; }
+.voice-recording-list .recording-index { color: var(--teal); font: 600 1.15rem "Newsreader"; }
+.voice-recording-list strong, .voice-recording-list small { display: block; }
+.voice-recording-list small { margin-top: 4px; color: var(--muted); font-size: .7rem; }
+.voice-recording-list audio { grid-column: 2 / -1; width: 100%; height: 38px; }
 .workspace-header { display: flex; align-items: center; gap: 18px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
 .workspace-header h2 { display: inline; margin: 0 8px; font-size: 1.25rem; }
 .workspace-header p { display: inline; color: var(--muted); font-size: .72rem; }
@@ -136,7 +275,13 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .voice-session .icon-button { color: white; border-color: rgba(255,255,255,.2); background: transparent; }
 .voice-brand { display: flex; align-items: center; gap: 12px; }
 .voice-brand > svg { width: 28px; color: #71c7b5; }
-.voice-stage { position: relative; min-height: 430px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; overflow: hidden; padding: 34px; text-align: center; background-image: radial-gradient(rgba(113,199,181,.13) 1px, transparent 1px); background-size: 22px 22px; }
+.recording-state { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; color: #b9cbc6; font-size: .68rem; font-weight: 700; }
+.recording-state > span { width: 8px; height: 8px; border-radius: 50%; background: #91a19d; }
+.recording-state.recording > span { background: #ef6370; box-shadow: 0 0 0 4px rgba(239,99,112,.14); animation: recording-pulse 1.4s ease-out infinite; }
+.recording-state.saving > span { background: #f2bf73; }
+.recording-state.saved > span { background: #71c7b5; }
+.recording-state.error > span { background: #ef6370; }
+.voice-stage { min-height: 430px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 14px; overflow: hidden; padding: 22px; background: #0d2522; }
 .voice-rings { position: absolute; top: 58px; width: 190px; height: 190px; }
 .voice-rings span { position: absolute; inset: 0; border: 1px solid rgba(113,199,181,.28); border-radius: 50%; }
 .voice-rings span:nth-child(2) { inset: 18px; }
@@ -144,19 +289,26 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .voice-stage.listening .voice-rings span, .voice-stage.speaking .voice-rings span { animation: voice-wave 1.5s ease-out infinite; }
 .voice-stage.listening .voice-rings span:nth-child(2), .voice-stage.speaking .voice-rings span:nth-child(2) { animation-delay: .2s; }
 .voice-stage.listening .voice-rings span:nth-child(3), .voice-stage.speaking .voice-rings span:nth-child(3) { animation-delay: .4s; }
-.voice-activity { position: relative; z-index: 1; width: 88px; height: 88px; display: grid; place-items: center; margin-top: 12px; color: #8ed1c2; }
-.voice-activity svg { width: 42px; height: 42px; }
-.voice-stage h3 { margin: 48px 0 4px; font: 600 1.35rem "Newsreader"; }
-.voice-transcript { width: min(480px, 100%); padding: 11px 14px; text-align: left; border-left: 3px solid #71c7b5; background: rgba(255,255,255,.08); }
-.voice-transcript.agent { border-left-color: #e1a64f; }
-.voice-transcript span { color: #8ed1c2; font-size: .65rem; font-weight: 700; text-transform: uppercase; }
-.voice-transcript.agent span { color: #f2bf73; }
-.voice-transcript p { margin: 4px 0 0; color: #e4eeeb; font-size: .82rem; line-height: 1.45; }
+.voice-status { display: flex; align-items: center; gap: 12px; }
+.voice-activity { width: 46px; height: 46px; display: grid; place-items: center; flex: 0 0 auto; color: #8ed1c2; border: 1px solid rgba(113,199,181,.3); border-radius: 50%; background: rgba(113,199,181,.08); }
+.voice-activity svg { width: 23px; height: 23px; }
+.voice-status h3 { margin: 3px 0 0; color: white; font: 600 1.1rem "Newsreader"; }
+.voice-conversation-log { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 10px; padding: 18px; border: 1px solid rgba(255,255,255,.1); border-radius: 6px; background: rgba(255,255,255,.035); }
+.voice-empty { min-height: 180px; display: grid; place-content: center; justify-items: center; gap: 10px; color: #8fa8a1; text-align: center; }
+.voice-empty svg { width: 30px; }
+.voice-empty p { margin: 0; font-size: .78rem; }
+.voice-turn { width: min(82%, 480px); padding: 11px 13px; border-radius: 6px; background: rgba(255,255,255,.09); }
+.voice-turn.patient { align-self: flex-end; background: #17685f; }
+.voice-turn.live { outline: 1px solid rgba(142,209,194,.45); }
+.voice-turn span { color: #8ed1c2; font-size: .63rem; font-weight: 700; text-transform: uppercase; }
+.voice-turn.agent span { color: #f2bf73; }
+.voice-turn p { margin: 4px 0 0; color: #eff6f4; font-size: .82rem; line-height: 1.45; }
 .voice-error { width: min(480px, 100%); text-align: left; }
 .voice-session > footer { display: flex; justify-content: center; padding: 16px; border-top: 1px solid rgba(255,255,255,.12); }
 .end-call { min-height: 42px; display: flex; align-items: center; gap: 8px; padding: 0 18px; border: 0; border-radius: 6px; color: white; background: var(--rose); font-weight: 700; }
 .end-call svg { width: 18px; }
 @keyframes voice-wave { 70%, 100% { transform: scale(1.2); opacity: 0; } }
+@keyframes recording-pulse { 70%, 100% { box-shadow: 0 0 0 9px rgba(239,99,112,0); } }
 .history-panel { margin-top: 20px; border: 1px solid var(--line); background: white; }
 .history-panel > header { display: flex; justify-content: space-between; align-items: center; padding: 22px; border-bottom: 1px solid var(--line); }
 .history-panel h2 { margin: 4px 0 0; }
@@ -230,8 +382,10 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
   .consultation-layout { grid-template-columns: 160px minmax(0,1fr); }
   .workspace-container { padding-left: 14px; }
   .workspace-header { flex-wrap: wrap; }
+  .communication-options { grid-template-columns: 1fr; }
   .review-flag { order: 3; }
   .message { width: 88%; }
+  .patient-home-actions { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 680px) {
@@ -245,17 +399,51 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
   .patient-sidebar.mobile-hidden { display: none; }
   .main-content { min-height: calc(100vh - 66px); }
   .welcome-state { display: none; }
+  .home-page { min-height: calc(100vh - 66px); padding: 42px 20px; }
+  .home-page h1 { font-size: 3.4rem; }
+  .patient-home h1 { font-size: 2.35rem; }
+  .patient-reports-page { padding: 24px 14px; }
+  .patient-reports-page h1 { font-size: 2rem; }
+  .patient-report-list article { grid-template-columns: 34px minmax(0, 1fr); }
+  .patient-report-list article button { grid-column: span 2; width: 100%; }
+  .home-action { min-height: 96px; grid-template-columns: 48px minmax(0,1fr) 20px; padding: 16px; }
+  .home-action-icon { width: 48px; height: 48px; }
   .patient-detail { padding: 18px 12px; }
   .mobile-back { display: grid; }
   .patient-heading { flex-wrap: wrap; }
   .patient-avatar { display: none; }
   .patient-heading h1 { font-size: 1.8rem; }
+  .consultation-entry { min-height: calc(100vh - 210px); padding: 24px 6px; }
+  .consultation-entry h2 { font-size: 1.9rem; }
+  .consultation-entry-options { grid-template-columns: 1fr; }
+  .consultation-entry-options > button { min-height: 112px; grid-template-columns: 48px minmax(0, 1fr) 18px; padding: 16px; }
   .start-button { width: 100%; margin: 8px 0 0; }
-  .consultation-layout { display: block; }
-  .visit-list { display: flex; overflow: auto; gap: 5px; padding: 12px 0; border: 0; }
+  .patient-profile { grid-template-columns: 1fr; }
+  .profile-field, .profile-field:nth-child(2n) { min-height: 88px; border-right: 0; }
+  .profile-actions { grid-column: span 1; flex-direction: column; }
+  .subpage-heading h1 { font-size: 2rem; }
+  .summary-card > header, .summary-card > footer { align-items: flex-start; }
+  .summary-card > footer { gap: 12px; flex-direction: column; }
+  .summary-card > footer button { width: 100%; }
+  .clinician-consultations { min-height: auto; }
+  .consultation-summary-panel { min-height: 430px; }
+  .consultation-summary-body { padding: 4px 16px; }
+  .report-row { align-items: flex-start; flex-direction: column; }
+  .report-row button { width: 100%; }
+  .consultation-summary-actions { align-items: stretch; flex-direction: column; }
+  .consultation-summary-actions button { width: 100%; }
+  .consultation-layout { height: auto; min-height: 0; display: block; }
+  .visit-list { height: auto; display: flex; overflow: auto; gap: 5px; padding: 12px 0; border: 0; }
   .visit-list button { flex: 0 0 155px; }
   .workspace-container { padding: 0; }
   .consultation-workspace { height: calc(100vh - 315px); min-height: 470px; }
+  .communication-choice { min-height: 430px; padding: 24px 18px; }
+  .communication-choice h2 { font-size: 1.8rem; }
+  .communication-options > button { min-height: 104px; grid-template-columns: 46px minmax(0, 1fr) 18px; padding: 15px; }
+  .communication-option-icon { width: 46px; height: 46px; }
+  .patient-channel-view { height: calc(100vh - 315px); min-height: 430px; }
+  .patient-channel-view .consultation-workspace, .patient-speech-workspace { height: 100%; min-height: 0; }
+  .speech-workspace { min-height: 470px; }
   .workspace-header { padding: 12px; }
   .workspace-header p { display: none; }
   .header-actions { width: 100%; margin: 0; }

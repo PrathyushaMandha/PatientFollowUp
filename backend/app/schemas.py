@@ -70,6 +70,14 @@ class MessageView(OrmModel):
     created_at: datetime
 
 
+class VoiceRecordingView(OrmModel):
+    public_id: str
+    consultation_id: int
+    content_type: str
+    byte_size: int
+    created_at: datetime
+
+
 class ConsultationView(OrmModel):
     public_id: str
     patient_id: int

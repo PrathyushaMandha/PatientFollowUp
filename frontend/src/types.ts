@@ -35,6 +35,14 @@ export type Consultation = {
   messages: Message[];
 };
 
+export type VoiceRecording = {
+  public_id: string;
+  consultation_id: number;
+  content_type: string;
+  byte_size: number;
+  created_at: string;
+};
+
 export type Question = {
   number: number;
   text: string;

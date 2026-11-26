@@ -146,3 +146,5 @@ npm run build
 ## Clinical boundary
 
 This repository is a development prototype, not a medical device or emergency service. Do not use identifiable patient information with an AI provider without approved data-handling agreements. Clinical teams must approve escalation wording, consent, access control, encryption, audit retention, and emergency procedures before real-patient use.
+
+Patient voice sessions save the searchable transcript in SQL Server and microphone audio under `backend/voice_recordings/`. Audio downloads require an authenticated user with access to the consultation. Production deployments must move recordings to encrypted managed storage and define explicit consent, retention, deletion, and backup policies.

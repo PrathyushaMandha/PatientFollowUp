@@ -1,4 +1,5 @@
 from io import BytesIO
+import re
 from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
@@ -16,6 +17,16 @@ from reportlab.platypus import (
 
 from app.models import Assessment, Consultation, ConsultationSummary, Patient
 from app.services.agent import ConversationFindings
+
+
+def build_report_filename(patient: Patient, consultation: Consultation) -> str:
+    patient_name = re.sub(
+        r"[^A-Za-z0-9_-]+",
+        "_",
+        f"{patient.first_name}_{patient.last_name}".strip("_"),
+    ).strip("_") or "patient"
+    consultation_date = consultation.started_at.date().isoformat()
+    return f"{patient_name}_{consultation_date}.pdf"
 
 
 def build_consultation_report(

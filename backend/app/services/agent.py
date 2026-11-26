@@ -166,7 +166,7 @@ class FollowupAgent:
         prompt = f"""Extract report findings from this consultation transcript.
 Return JSON only with this exact structure:
 {{
-  "summary": "brief source-grounded symptom summary",
+    "summary": "detailed source-grounded consultation narrative",
   "symptoms": [
     {{
       "symptom": "symptom stated by the patient",
@@ -184,6 +184,12 @@ Rules:
 - Do not invent severity, duration, impact, or improvement.
 - Merge duplicate references to the same symptom and keep the latest stated change.
 - If no symptom is stated, return an empty symptoms list.
+- Write the summary as one coherent paragraph of 3 to 5 complete sentences.
+- Describe the patient's main concerns, stated timing, progression or change, daily impact,
+  and other relevant patient-reported context when those details are present.
+- Distinguish current concerns from symptoms the patient says have improved or resolved.
+- Omit details that were only asked about but never confirmed by the patient.
+- Do not include speaker labels, bullet points, recommendations, or diagnoses.
 
 TRANSCRIPT
 {transcript}"""
