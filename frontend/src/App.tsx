@@ -310,7 +310,7 @@ function VoiceConversation({ consultationId, initialMessages, onClose, onMessage
     speech.onerror = () => {
       conversationActive.current = false;
       setStatus("idle");
-      setError("The spoken response could not be played.");
+      console.warn("The spoken response could not be played.");
     };
     window.speechSynthesis.speak(speech);
   }
