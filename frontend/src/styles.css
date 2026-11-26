@@ -167,21 +167,21 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .visit-list svg { width: 15px; color: var(--muted); }
 .empty-copy { color: var(--muted); font-size: .8rem; padding: 8px; }
 .workspace-container { min-width: 0; min-height: 0; display: grid; overflow: hidden; padding: 18px 0 0 24px; }
-.consultation-workspace { height: calc(100vh - 205px); min-height: 520px; display: grid; grid-template-rows: auto minmax(0,1fr) auto auto auto; background: white; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
-.communication-choice { min-height: 520px; display: grid; align-content: center; padding: clamp(28px, 5vw, 64px); border: 1px solid var(--line); border-radius: 7px; background: white; }
+.consultation-workspace { height: 100%; min-height: 0; display: grid; grid-template-rows: auto minmax(0,1fr) auto auto auto; background: white; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.communication-choice { height: 100%; min-height: 0; display: grid; align-content: start; overflow-y: auto; padding: clamp(20px, 3vw, 38px); border: 1px solid var(--line); border-radius: 7px; background: white; }
 .communication-choice > header { max-width: 620px; }
 .communication-choice > header > div { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .72rem; }
-.communication-choice h2 { margin: 14px 0 8px; font-size: 2.25rem; }
+.communication-choice h2 { margin: 10px 0 6px; font-size: 1.9rem; }
 .communication-choice header p { margin: 0; color: var(--muted); font-size: .86rem; }
-.communication-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
-.communication-options > button { min-width: 0; min-height: 128px; display: grid; grid-template-columns: 54px minmax(0, 1fr) 20px; align-items: center; gap: 15px; padding: 20px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 7px; background: #fafbf9; }
+.communication-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 20px; }
+.communication-options > button { min-width: 0; min-height: 96px; display: grid; grid-template-columns: 44px minmax(0, 1fr) 18px; align-items: center; gap: 12px; padding: 14px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 7px; background: #fafbf9; }
 .communication-options > button:not(:disabled):hover { border-color: #9dc9bd; background: #f2f8f5; transform: translateY(-2px); }
-.communication-option-icon { width: 54px; height: 54px; display: grid; place-items: center; color: var(--forest); border-radius: 6px; background: var(--mint); }
+.communication-option-icon { width: 44px; height: 44px; display: grid; place-items: center; color: var(--forest); border-radius: 6px; background: var(--mint); }
 .communication-option-icon.voice { color: #80531a; background: #f7ead7; }
 .communication-option-icon.summary { color: #345c78; background: #e4eef4; }
 .communication-option-icon.report { color: #7d4f18; background: #f7ead7; }
 .communication-options strong, .communication-options small { display: block; }
-.communication-options strong { margin-bottom: 6px; font: 600 1.2rem "Newsreader"; }
+.communication-options strong { margin-bottom: 4px; font: 600 1.05rem "Newsreader"; }
 .communication-options small { color: var(--muted); font-size: .74rem; line-height: 1.4; }
 .communication-options > button > svg { color: var(--teal); }
 .communication-choice > footer { display: flex; align-items: center; gap: 8px; margin-top: 22px; color: var(--muted); font-size: .72rem; }
@@ -437,7 +437,7 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
   .visit-list button { flex: 0 0 155px; }
   .workspace-container { padding: 0; }
   .consultation-workspace { height: calc(100vh - 315px); min-height: 470px; }
-  .communication-choice { min-height: 430px; padding: 24px 18px; }
+  .communication-choice { height: auto; min-height: 0; padding: 22px 16px; }
   .communication-choice h2 { font-size: 1.8rem; }
   .communication-options > button { min-height: 104px; grid-template-columns: 46px minmax(0, 1fr) 18px; padding: 15px; }
   .communication-option-icon { width: 46px; height: 46px; }
