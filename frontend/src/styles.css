@@ -227,9 +227,19 @@ label { display: grid; gap: 7px; color: #46514d; font-size: .82rem; font-weight:
 .voice-history-ready > footer { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 18px; border-top: 1px solid var(--line); background: white; }
 .voice-history-ready > footer p { margin: 0; color: var(--muted); font-size: .74rem; }
 .voice-history-ready > footer button { flex: 0 0 auto; }
-.voice-inline { min-height: 0; overflow: hidden; }
+.voice-inline { height: 100%; min-height: 0; overflow: hidden; }
 .voice-inline .voice-session { width: 100%; height: 100%; max-height: none; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border: 0; border-radius: 0; box-shadow: none; }
-.voice-inline .voice-stage { min-height: 0; padding: 24px 18px; }
+.voice-inline .voice-session > header { padding: 11px 14px; }
+.voice-inline .voice-session h2 { font-size: 1.25rem; }
+.voice-inline .voice-brand { gap: 9px; }
+.voice-inline .voice-brand > svg { width: 23px; }
+.voice-inline .voice-stage { min-height: 0; gap: 8px; padding: 12px 14px; }
+.voice-inline .voice-status { gap: 9px; }
+.voice-inline .voice-activity { width: 38px; height: 38px; }
+.voice-inline .voice-activity svg { width: 20px; height: 20px; }
+.voice-inline .voice-conversation-log { padding: 12px; }
+.voice-inline .voice-session > footer { padding: 9px; }
+.voice-inline .end-call { min-height: 38px; }
 .voice-recordings-view { min-height: 470px; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: white; }
 .voice-recordings-view > header { padding: 22px 24px; border-bottom: 1px solid var(--line); }
 .voice-recordings-view h2 { margin: 5px 0 0; font-size: 1.7rem; }
